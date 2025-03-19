@@ -21,6 +21,10 @@
   background-color: aqua;
   border-radius: 10px;
 
+  &.disabled {
+    background-color: lightgray;
+  }
+
   .name {
     font-size: 13px;
     color: gray;
