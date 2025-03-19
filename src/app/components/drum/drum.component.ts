@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-drum',
@@ -35,20 +35,39 @@ export class DrumComponent implements OnInit {
     {
       key: 'G',
       name: '',
-      audio: new Audio('bad-path/assets/audio/bell-ring.mp3'),
-      isDisabled: false
+      audio: new Audio('assets/audio/bell-ring.mp3'),
+      isDisabled: true
     }
   ]
 
+  @ViewChildren('drumItems') drumItemsHtml!: QueryList<ElementRef>;
 
   @HostListener('document:keydown', ['$event'])
   onKeydown(event: KeyboardEvent) {
     const drum = this.drumsList.find(drum => drum.key === event.key.toUpperCase());
-    if (drum && !drum.isDisabled) {
-      console.log(event.code, event.keyCode, event);
-      drum.audio.play();
-    }
 
+    if (drum && !drum.isDisabled) {
+      drum.audio.play();
+
+      const drumItemElement = this.drumItemsHtml.toArray().find((item, index) => {
+        return this.drumsList[index].key === event.key.toUpperCase();
+      });
+
+      if (drumItemElement) {
+        drumItemElement.nativeElement.classList.add('active');
+      }
+    }
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  onKeyup(event: KeyboardEvent) {
+    const drumItemElement = this.drumItemsHtml.toArray().find((item, index) => {
+      return this.drumsList[index].key === event.key.toUpperCase();
+    });
+
+    if (drumItemElement) {
+      drumItemElement.nativeElement.classList.remove('active');
+    }
   }
 
   ngOnInit() {
@@ -58,12 +77,11 @@ export class DrumComponent implements OnInit {
       };
 
       drum.audio.onerror = (error) => {
-        console.error(`Error loading audio for ${drum.name}:`, error);
+        console.error(`Error loading audio for ${drum.name}:`, error, drum.audio.src);
         drum.isDisabled = true;
       };
 
       drum.audio.load();
-
     });
   }
 }

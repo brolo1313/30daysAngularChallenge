@@ -1,7 +1,7 @@
 <div class="main">
   <div class="wrapper_drums">
     @for(drum of drumsList; track drum.name){
-    <div [class.disabled]="drum.isDisabled" class="drum_item">
+    <div #drumItems [class.disabled]="drum.isDisabled" class="drum_item">
         <span class="name">{{ drum.name ? drum.name : 'no name' }}</span>
         <span class="key">{{ drum.key }}</span>
     </div>
