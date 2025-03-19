@@ -1,0 +1,13 @@
+<div class="main">
+  <div class="wrapper_drums">
+    @for(drum of drumsList; track drum.name){
+    <div class="drum_item">
+        <span class="name">{{ drum.name }}</span>
+        <span class="key">{{ drum.key }}</span>
+    </div>
+    } @empty {
+    <span>There are no drums</span>
+    }
+  </div>
+  <input type="text" (keypress)="handler($event)" />
+</div>
