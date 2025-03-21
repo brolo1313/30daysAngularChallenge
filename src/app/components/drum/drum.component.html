@@ -1,0 +1,25 @@
+<div class="main">
+  <div class="wrapper_drums">
+    @for(drum of drumsList; track drum.name){
+    <div
+      #drumItems
+      [class.disabled]="drum.isDisabled"
+      (mousedown)="kickAndAddClass($event)"
+      (mouseup)="kickAndRemoveClass($event)"
+      (mouseleave)="kickAndRemoveClass($event)"
+      class="drum_item"
+    >
+      <span class="name">{{ drum.name ? drum.name : "no name" }}</span>
+      <span class="key">{{ drum.key }}</span>
+    </div>
+    } @empty {
+    <span>There are no drums</span>
+    }
+  </div>
+
+  @if (!isLatinLayout) {
+  <div class="error-exception-block">
+    <span>{{ textForLayoutException }}</span>
+  </div>
+  }
+</div>
