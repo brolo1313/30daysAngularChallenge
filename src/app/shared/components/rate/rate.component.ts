@@ -23,7 +23,7 @@ export class RateComponent implements ControlValueAccessor, OnInit {
 
   @Input() options!: RateOptions;
 
-  public  trackByIndex(index: number): number {
+  public trackByIndex(index: number): number {
     return index;
   }
 
@@ -55,26 +55,15 @@ export class RateComponent implements ControlValueAccessor, OnInit {
     console.log('RateComponent', this.stars);
   }
 
-  private fillStarts(): void{
-    // this.stars = Array.from({ length: this.options.size })
-    while (this.stars.length < this.options.size) {
-      this.stars.push({
-        id: this.stars.length,
-      });
-    }
+  private fillStarts(): void {
+    this.stars = Array.from({ length: this.options.size }, (_, index) => ({ id: index + 1 }));
+
   }
 
-  public rateUp(): void {
-    if (this.rate < this.options.size) {
-      console.log('');
-      // this.rate++;
-      // this.onChange(this.rate);
-    }
-  }
-
-  public rateDown(): void {
-    if (this.rate > 0) {
-      this.rate--;
+  public rateHandler(index: number): void {
+    if (this.rate <= this.options.size) {
+      console.log('index', index);
+      this.rate = index + 1;
       this.onChange(this.rate);
     }
   }
