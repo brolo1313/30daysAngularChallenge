@@ -1,0 +1,17 @@
+.rate_stars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 15px;
+  margin-top: 30px;
+
+  .star_item {
+    display: inline-block;
+    font-size: 1.5em;
+    color: #ffd700;
+
+    svg {
+      cursor: pointer;
+    }
+  }
+}
