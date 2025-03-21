@@ -19,7 +19,7 @@ export class AppComponent {
       name: 'Drum', path: '/drum'
     },
     {
-      name: 'Rate', path: '/rate'
+      name: 'Rate', path: '/rate-form'
     }
   ]
 

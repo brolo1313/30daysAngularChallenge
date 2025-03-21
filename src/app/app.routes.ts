@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 
 export const routes: Routes = [
     {
@@ -7,8 +6,8 @@ export const routes: Routes = [
         loadComponent: () => import('./components/drum/drum.component').then((m) => m.DrumComponent)
     },
     {
-        path: 'rate',
-        loadComponent: () => import('./components/rate/rate.component').then((m) => m.RateComponent)
+        path: 'rate-form',
+        loadComponent: () => import('./components/rate-form/rate-form.component').then((m) => m.RateFormComponent)
     },
 
     { path: '', redirectTo: '', pathMatch: 'full' },
