@@ -2,16 +2,18 @@
   <input
     #starInput
     [(ngModel)]="sizeValue"
+    (blur)="onSizeChange()"
     type="number"
     placeholder="Set count of stars"
-     class="input-field"
+    class="input-field"
   />
   <input
     #textInput
     [(ngModel)]="textValue"
+    (input)="onTextChange($event)"
     type="text"
     placeholder="Set text"
-     class="input-field"
+    class="input-field"
   />
   <button
     [disabled]="!starInput.value || !textInput.value"

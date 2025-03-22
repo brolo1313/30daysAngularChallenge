@@ -22,8 +22,24 @@ export class RateFormComponent {
   }
 
   public form: FormGroup = this.fb.group({
-    rate: [0]
-  });;
+    rate: [{ value: 0, disabled: false }] 
+  });
+
+
+  public onSizeChange() {
+    if (this.sizeValue! > 10) {
+      this.sizeValue = 10;
+    } else if (this.sizeValue! < 1) {
+      this.sizeValue = 1;
+    }
+  }
+
+  public onTextChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    inputElement.value = inputElement.value.replace(/[^a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ\s]/g, '').slice(0, 20);;
+    this.textValue = inputElement.value;
+  }
+
 
   public saveRateOptions(): void {
     this.rateOptions = {
