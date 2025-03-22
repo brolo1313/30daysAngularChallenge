@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-interface RateOptions {
+export interface RateOptions {
   size: number;
   text: string;
 }
@@ -19,7 +19,9 @@ interface RateOptions {
     }
   ],
 })
-export class RateComponent implements ControlValueAccessor, OnInit {
+export class RateComponent implements ControlValueAccessor, OnChanges {
+
+  cdr = inject(ChangeDetectorRef);
 
   @Input() options!: RateOptions;
 
@@ -34,25 +36,32 @@ export class RateComponent implements ControlValueAccessor, OnInit {
   public onTouched: any = () => { };
 
   public writeValue(value: number): void {
+    console.log('writeValue', value);
     this.rate = value;
-  }
-
-  public registerOnChange(fn: any): void {
-    this.onChange = fn;
   }
 
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
+  public registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
   public setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 
-  ngOnInit() {
-    console.log('RateComponent', this.options);
-    this.fillStarts();
-    console.log('RateComponent', this.stars);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const { options } = changes;
+
+    if (options && options.currentValue) {
+      this.rate = 0;
+      this.fillStarts();
+      this.cdr.detectChanges();
+    }
+
   }
 
   private fillStarts(): void {
@@ -62,7 +71,6 @@ export class RateComponent implements ControlValueAccessor, OnInit {
 
   public rateHandler(index: number): void {
     if (this.rate <= this.options.size) {
-      console.log('index', index);
       this.rate = index + 1;
       this.onChange(this.rate);
     }

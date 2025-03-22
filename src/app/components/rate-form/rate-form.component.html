@@ -1,1 +1,27 @@
-<app-rate [options]="rateOptions"></app-rate>
+<div class="inputs">
+  <input
+    #starInput
+    [(ngModel)]="sizeValue"
+    type="number"
+    placeholder="Set count of stars"
+     class="input-field"
+  />
+  <input
+    #textInput
+    [(ngModel)]="textValue"
+    type="text"
+    placeholder="Set text"
+     class="input-field"
+  />
+  <button
+    [disabled]="!starInput.value || !textInput.value"
+    (click)="saveRateOptions()"
+    class="save-button"
+  >
+    Save
+  </button>
+</div>
+<form [formGroup]="form">
+  <pre>{{ form.value | json }}</pre>
+  <app-rate formControlName="rate" [options]="rateOptions"></app-rate>
+</form>
