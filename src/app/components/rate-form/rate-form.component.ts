@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-rate-form',
   imports: [RateComponent, ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './rate-form.component.html',
-  styleUrl: './rate-form.component.scss'
+  styleUrl: './rate-form.component.scss',
 })
 export class RateFormComponent {
 
@@ -22,7 +22,7 @@ export class RateFormComponent {
   }
 
   public form: FormGroup = this.fb.group({
-    rate: [{ value: 0, disabled: false }] 
+    rate: [{ value: 0, disabled: false }]
   });
 
 
@@ -46,6 +46,8 @@ export class RateFormComponent {
       size: this.sizeValue || this.rateOptions.size,
       text: this.textValue || this.rateOptions.text
     };
-    this.form.patchValue({ rate: 0 });
+    this.form.setValue({ rate: 0 });
+    this.sizeValue = null;
+    this.textValue = null;
   }
 }

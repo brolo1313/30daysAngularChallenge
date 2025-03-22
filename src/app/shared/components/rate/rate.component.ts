@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -8,7 +9,7 @@ export interface RateOptions {
 
 @Component({
   selector: 'app-rate',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './rate.component.html',
   styleUrl: './rate.component.scss',
   providers: [
@@ -24,6 +25,7 @@ export class RateComponent implements ControlValueAccessor, OnChanges {
   cdr = inject(ChangeDetectorRef);
 
   @Input() options!: RateOptions;
+  @Input() customTextStyles: { [key: string]: string } = {};
 
   public trackByIndex(index: number): number {
     return index;
@@ -36,7 +38,6 @@ export class RateComponent implements ControlValueAccessor, OnChanges {
   public onTouched: any = () => { };
 
   public writeValue(value: number): void {
-    console.log('writeValue', value);
     this.rate = value;
   }
 
@@ -73,6 +74,7 @@ export class RateComponent implements ControlValueAccessor, OnChanges {
     if (this.rate <= this.options.size) {
       this.rate = index + 1;
       this.onChange(this.rate);
+      this.onTouched();
     }
   }
 

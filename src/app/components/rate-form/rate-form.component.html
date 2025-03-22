@@ -25,5 +25,9 @@
 </div>
 <form [formGroup]="form">
   <pre>{{ form.value | json }}</pre>
-  <app-rate formControlName="rate" [options]="rateOptions"></app-rate>
+  <app-rate
+    [customTextStyles]="{ color: 'red' }"
+    formControlName="rate"
+    [options]="rateOptions"
+  ></app-rate>
 </form>
